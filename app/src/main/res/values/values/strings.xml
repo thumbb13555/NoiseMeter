@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NoiseAudiometer</string>
+    <string name="to_csv">To CSV</string>
+    <string name="to_pdf">To PDF</string>
+    <string name="history">History</string>
+    <string name="calibration">Calibration</string>
+</resources>

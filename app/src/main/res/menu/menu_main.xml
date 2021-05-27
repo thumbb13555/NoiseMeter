@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/action_Calibration"
+        android:title="@string/calibration"
+        android:icon="@drawable/ic_calibration"
+        />
+    <item
+        android:id="@+id/action_History"
+        android:title="@string/history"
+        android:icon="@drawable/ic_history"
+        />
+    <item
+        android:id="@+id/action_Save"
+        android:title="Save"
+        android:icon="@drawable/ic_save"
+        />
+</menu>

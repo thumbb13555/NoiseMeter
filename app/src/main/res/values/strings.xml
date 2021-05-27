@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">NoiseAudiometer</string>
+    <string name="to_csv">To CSV</string>
+    <string name="to_pdf">To PDF</string>
+    <string name="history">History</string>
+    <string name="calibration">Calibration</string>
+    <string name="min_tag">Min</string>
+    <string name="max_tag">Max</string>
+    <string name="avg_tag">Avg</string>
+    <string name="loading">loading...</string>
+    <string name="save_data">Save data</string>
+    <string name="name">Name</string>
+    <string name="active_duration">Active duration:</string>
+    <string name="save_time">Save time:</string>
+    <string name="max_sound_intensity">Max sound intensity:</string>
+    <string name="min_sound_intensity">Min sound intensity:</string>
+    <string name="average_sound_intensity">Average sound intensity:</string>
+    <string name="dialog_name_setting">Please name your setting.</string>
+    <string name="record_data">Recorded Data</string>
+    <string name="db">db</string>
+    <string name="noise">Noise</string>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@android:color/white">
+    <item android:id="@android:id/background">
+        <selector>
+            <item>
+                <layer-list>
+                    <item
+                        android:bottom="2dp"
+                        android:left="2dp">
+                        <shape>
+                            <gradient
+                                android:angle="0"
+                                android:endColor="#E83434"
+                                android:startColor="#E65B5B" />
+                            <stroke
+                                android:width="@dimen/dp_3"
+                                android:color="#E2E2E2" />
+                            <corners android:radius="999dp" />
+                            <padding
+                                android:bottom="10dp"
+                                android:left="10dp"
+                                android:right="10dp"
+                                android:top="10dp" />
+                        </shape>
+                    </item>
+                </layer-list>
+            </item>
+
+        </selector>
+    </item>
+</ripple>
+

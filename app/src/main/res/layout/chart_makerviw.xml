@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/commend_round_layout"
+    android:backgroundTint="#51B3EF"
+    android:padding="8dp"
+    >
+
+    <TextView
+        android:id="@+id/textView_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2021/04/07, 09:33:22"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_Data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="data"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="@+id/textView_Title"
+        app:layout_constraintStart_toStartOf="@+id/textView_Title"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Title" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
