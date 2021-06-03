@@ -47,6 +47,9 @@ class RealtimeChart {
         chart.clear()
         initChart()
     }
+    fun clearData(){
+        chart.data.clearValues()
+    }
 
     private fun initChart() {
         chart.description.isEnabled = false
@@ -101,13 +104,14 @@ class RealtimeChart {
         return set
     }
 
-    fun createData(db: Float) {
+    fun createData(db: Float) :Int{
         thread.interrupt()
         val runnable = Runnable { addData(db) }
         thread = Thread {
             activity.runOnUiThread(runnable)
         }
         thread.start()
+        return chart.data.entryCount
     }
 
     private fun addData(db: Float) {

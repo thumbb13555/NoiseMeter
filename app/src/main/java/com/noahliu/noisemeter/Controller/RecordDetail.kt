@@ -57,8 +57,8 @@ class RecordDetail : BaseActivity() {
         textView_Name.text = dataForm.name
         textView_ActivityDuration.text = getString(R.string.active_duration)+" $duration"
         textView_SaveTime.text = getString(R.string.save_time)+" ${dataForm.date}, ${dataForm.time}"
-        textView_Max.text = getString(R.string.max_sound_intensity)+"\n${dataForm.max}"
-        textView_Min.text = getString(R.string.min_sound_intensity)+"\n${dataForm.min}"
+        textView_Max.text = getString(R.string.max_tag)+"\n${dataForm.max}"
+        textView_Min.text = getString(R.string.min_tag)+"\n${dataForm.min}"
         textView_Average.text = getString(R.string.avg_tag)+"\n${dataForm.avg}"
 
     }

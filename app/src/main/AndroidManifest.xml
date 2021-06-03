@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.noahliu.noisemeter">
-
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+
         android:name=".Model.LiveData.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,6 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8691515013768572~4067620134"/>
+
         <activity android:name=".Controller.RecordDetail">
 
         </activity>
@@ -24,7 +29,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Controller.HistoryRecord" >
-
 
         </activity>
     </application>

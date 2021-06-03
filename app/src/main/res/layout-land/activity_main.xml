@@ -37,18 +37,6 @@
         app:layout_constraintTop_toTopOf="@+id/lineChart_CurrentValue" />
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="#DADADA"
-        android:gravity="center"
-        android:text="For ADs"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
@@ -86,14 +74,31 @@
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
     </LinearLayout>
 
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/meter"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.google.android.gms.ads.AdView>
+    <!--    app:adUnitId="ca-app-pub-8691515013768572~4067620134"正式用-->
+    <!--ads:adUnitId = "ca-app-pub-3940256099942544/6300978111"測試用-->
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/adView">
 
 
         <TextView
@@ -140,7 +145,7 @@
         android:textColor="#FFFFFF"
         android:textSize="@dimen/dp_10"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/meter"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline

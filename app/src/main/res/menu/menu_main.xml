@@ -14,7 +14,13 @@
         />
     <item
         android:id="@+id/action_Save"
-        android:title="Save"
+        android:title="@string/save"
         android:icon="@drawable/ic_save"
+        />
+    <item
+        android:id="@+id/action_Info"
+        android:visible="false"
+        android:title="@string/about"
+        android:icon="@drawable/ic_info"
         />
 </menu>

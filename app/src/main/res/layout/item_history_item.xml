@@ -30,7 +30,7 @@
                 android:layout_marginTop="8dp"
                 android:text="Name"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textSize="@dimen/sp_18"
+                android:textSize="@dimen/sp_16"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -40,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:textSize="@dimen/sp_12"
                 android:text="@string/active_duration"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView_Title"
@@ -51,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/save_time"
+                android:textSize="@dimen/sp_12"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView_ActiveTTag"
                 app:layout_constraintTop_toBottomOf="@+id/textView_ActiveTTag" />
@@ -65,6 +67,8 @@
                 android:backgroundTint="@color/colorTheme"
                 android:fontFamily="sans-serif-black"
                 android:text="Detail Info"
+                android:textSize="@dimen/sp_14"
+                android:padding="@dimen/dp_10"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"

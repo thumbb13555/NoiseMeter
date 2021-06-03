@@ -12,11 +12,15 @@
     <string name="name">Name</string>
     <string name="active_duration">Active duration:</string>
     <string name="save_time">Save time:</string>
-    <string name="max_sound_intensity">Max sound intensity:</string>
-    <string name="min_sound_intensity">Min sound intensity:</string>
+    <string name="max_sound_intensity">Max:</string>
+    <string name="min_sound_intensity">Min:</string>
     <string name="average_sound_intensity">Average sound intensity:</string>
     <string name="dialog_name_setting">Please name your setting.</string>
     <string name="record_data">Recorded Data</string>
     <string name="db">db</string>
     <string name="noise">Noise</string>
+    <string name="lock_rotate">Has been locked screen rotate.</string>
+    <string name="check">Check</string>
+    <string name="about">About</string>
+    <string name="save">Save</string>
 </resources>

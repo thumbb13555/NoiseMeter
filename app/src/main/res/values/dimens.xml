@@ -2,7 +2,6 @@
 <resources>
 
     <dimen name="common_margin">@dimen/dp_15</dimen>
-
     <!-- dp and sp values, must be defind in this file! -->
     <!-- view size,you can add if there is no one -->
     <dimen name="dp_m_60">-60dp</dimen>

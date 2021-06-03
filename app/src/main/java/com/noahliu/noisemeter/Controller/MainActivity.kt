@@ -2,19 +2,32 @@ package com.noahliu.noisemeter.Controller
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.app.Service
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.os.Vibrator
 import android.util.Log
+import android.view.KeyEvent
 import android.view.MenuItem
+import android.view.Surface
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import com.facebook.stetho.Stetho
 import com.github.mikephil.charting.charts.LineChart
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.admanager.AdManagerAdRequest
+import com.google.android.gms.ads.admanager.AdManagerAdView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.noahliu.noisemeter.Model.MediaRec.VolumeRecorder
 import com.noahliu.noisemeter.Model.Activity.BaseActivity
@@ -32,6 +45,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_record_detail.*
 import kotlinx.android.synthetic.main.dialog_save.*
 import kotlinx.android.synthetic.main.dialog_save.view.*
+import org.jetbrains.anko.configuration
+import org.jetbrains.anko.dimen
 import org.jetbrains.anko.doAsync
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,40 +54,50 @@ import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 
-class MainActivity : BaseActivity(), MeasureInterface, BottomNavigationView.OnNavigationItemSelectedListener{
+class MainActivity : BaseActivity(), MeasureInterface,
+    BottomNavigationView.OnNavigationItemSelectedListener {
 
     companion object {
         val TAG = MainActivity::class.java.simpleName + "My"
         var calibration = 0
         const val ROTATE_SAVE = "ROTATE_SAVE"
+        const val limitRotatableData = 1500
     }
-    private var tvCalRes:TextView? = null
+
+    private var tvCalRes: TextView? = null
     private var externalHasGone = false
     private var recordMediaHasGone = false
     private lateinit var realtimeChartSetting: RealtimeChart
     private var record: VolumeRecorder? = null
+    private lateinit var vibrator:Vibrator
+    lateinit var mAdView: AdView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         checkPermission()
         init()
         val chart = findViewById<LineChart>(R.id.lineChart_CurrentValue)
-
         realtimeChartSetting = if (savedInstanceState != null){
             val dataSave = savedInstanceState.getFloatArray(ROTATE_SAVE)
             RealtimeChart(this, chart,dataSave!!)
         }else{
             RealtimeChart(this, chart)
         }
-        realtimeChartSetting = RealtimeChart(this, chart)
-
         realtimeChartSetting.respond = this
+        vibrator = application.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
+
+        MobileAds.initialize(this)
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
     }
 
-    private fun init(){
+    private fun init() {
         Stetho.initializeWithDefaults(this)
         val bottomView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomView.menu.setGroupCheckable(0,false,false)
+        bottomView.menu.setGroupCheckable(0, false, false)
         bottomView.setOnNavigationItemSelectedListener(this)
         val btRecord = findViewById<DraggingButton>(R.id.button_Reset)
         calibration = MySharedPreferences.readCalibration(this)
@@ -80,7 +105,6 @@ class MainActivity : BaseActivity(), MeasureInterface, BottomNavigationView.OnNa
             realtimeChartSetting.clearChart()
         }
     }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val dataArray = ArrayList<Float>()
@@ -89,10 +113,6 @@ class MainActivity : BaseActivity(), MeasureInterface, BottomNavigationView.OnNa
             dataArray.add(chartItem.getEntryForIndex(i).y)
         }
         outState.putFloatArray(ROTATE_SAVE,dataArray.toFloatArray())
-
-
-
-
     }
 
     private fun checkPermission(): Boolean {
@@ -116,7 +136,7 @@ class MainActivity : BaseActivity(), MeasureInterface, BottomNavigationView.OnNa
             } else if (externalHasGone && !recordMediaHasGone) {
                 permissions = arrayOf(Manifest.permission.RECORD_AUDIO)
                 requestPermissions(permissions, 100)
-            } else if (externalHasGone && recordMediaHasGone){
+            } else if (externalHasGone && recordMediaHasGone) {
                 initVolumeRecord()
             }
         }
@@ -124,24 +144,24 @@ class MainActivity : BaseActivity(), MeasureInterface, BottomNavigationView.OnNa
     }
 
     private fun initVolumeRecord() {
-        if (record == null){
+        if (record == null) {
             record = VolumeRecorder(this, 100)
             record!!.respond = this
-            if (!record!!.isRecoding)record!!.startRecord()
+            if (!record!!.isRecoding) record!!.startRecord()
         }
     }
 
     override fun onStart() {
         super.onStart()
-        if (record == null || record!!.isRecoding)return
-        if (!record!!.isRecoding)record!!.startRecord()
+        if (record == null || record!!.isRecoding) return
+        if (!record!!.isRecoding) record!!.startRecord()
     }
 
 
     override fun onStop() {
         super.onStop()
-        if (record == null)return
-        if (record!!.isRecoding)record!!.stopRecord()
+        if (record == null) return
+        if (record!!.isRecoding) record!!.stopRecord()
     }
 
     @SuppressLint("SetTextI18n")
@@ -154,10 +174,20 @@ class MainActivity : BaseActivity(), MeasureInterface, BottomNavigationView.OnNa
         val inMax = findViewById<InfoBoard>(R.id.infoBoard_Max)
         volBar.setVolumeBar(db)
         meter.setValue(db)
+        val count = realtimeChartSetting.createData(db.toFloat())
 
-        realtimeChartSetting.createData(db.toFloat())
+        if (count>= limitRotatableData){
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+            if (count == limitRotatableData){
+                Toast.makeText(this, getString(R.string.lock_rotate), Toast.LENGTH_SHORT).show()
+                vibrator.vibrate(500)
+            }
+        }else if (count == 0 && requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LOCKED){
+           requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+            vibrator.vibrate(100)
+        }
 
-        if (tvCalRes!= null){
+        if (tvCalRes != null) {
             tvCalRes!!.text = "$db($calibration)db"
         }
         val cData = realtimeChartSetting.chart
@@ -192,19 +222,30 @@ class MainActivity : BaseActivity(), MeasureInterface, BottomNavigationView.OnNa
             goPermissionPage()
         } else checkPermission()
     }
-    private fun goPermissionPage(){
+
+    private fun goPermissionPage() {
         val intent = Intent("android.settings.APPLICATION_DETAILS_SETTINGS")
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent.data = Uri.fromParts("package",this.packageName,null)
+        intent.data = Uri.fromParts("package", this.packageName, null)
         startActivity(intent)
     }
 
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.action_History->{
-                val intent = Intent(this@MainActivity,HistoryRecord::class.java)
-                startActivity(intent)
+        when (item.itemId) {
+            R.id.action_History -> {
+                val alertDialog = AlertDialog.Builder(this)
+                alertDialog.setTitle(getString(R.string.check))
+                alertDialog.setMessage("Recording will be stopped, continue?")
+                alertDialog.setPositiveButton(android.R.string.ok){i,dialog->
+                    realtimeChartSetting.clearData()
+                    val intent = Intent(this@MainActivity, HistoryRecord::class.java)
+                    startActivity(intent)
+                }
+                alertDialog.setNegativeButton(android.R.string.cancel,null)
+                alertDialog.show()
             }
+
             R.id.action_Calibration -> {
                 val saveCal = calibration
                 val baseView = layoutInflater.inflate(R.layout.dialog_calibration, null)
@@ -268,7 +309,10 @@ class MainActivity : BaseActivity(), MeasureInterface, BottomNavigationView.OnNa
                         btOK.setOnClickListener {
                             val name = view.editText_Name.text.toString()
                             if (name.isEmpty()) {
-                                showToast(this@MainActivity, getString(R.string.dialog_name_setting))
+                                showToast(
+                                    this@MainActivity,
+                                    getString(R.string.dialog_name_setting)
+                                )
                                 return@setOnClickListener
                             }
                             doAsync {
@@ -277,7 +321,8 @@ class MainActivity : BaseActivity(), MeasureInterface, BottomNavigationView.OnNa
                                         .getTableSize()
                                 viewModel.insertData(
                                     DataForm(
-                                        name, time, date, max, min, avg, array, dataCount)
+                                        name, time, date, max, min, avg, array, dataCount
+                                    )
                                 )
                                 runOnUiThread {
                                     saveDialog.dismiss()
@@ -286,6 +331,10 @@ class MainActivity : BaseActivity(), MeasureInterface, BottomNavigationView.OnNa
                         }
                     }
                 }
+            }
+
+            R.id.action_Info ->{
+
             }
         }
         return true

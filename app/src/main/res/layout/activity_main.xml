@@ -7,7 +7,6 @@
     tools:context=".Controller.MainActivity">
 
 
-
     <com.noahliu.noisemeter.View.Meter
         android:id="@+id/meter"
         android:layout_width="0dp"
@@ -17,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/adView" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart_CurrentValue"
@@ -46,18 +45,21 @@
         app:layout_constraintGuide_percent="0.55" />
 
 
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:text="For ADs"
-        android:gravity="center"
-        android:background="#DADADA"
-        android:textAlignment="center"
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.google.android.gms.ads.AdView>
+<!--    app:adUnitId="ca-app-pub-8691515013768572~4067620134"正式用-->
+        <!--ads:adUnitId = "ca-app-pub-3940256099942544/6300978111"測試用-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -66,6 +68,7 @@
         app:menu="@menu/menu_main"
         app:labelVisibilityMode="labeled"
         android:background="#FFF"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
