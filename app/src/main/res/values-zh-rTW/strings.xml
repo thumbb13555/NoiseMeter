@@ -1,4 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">NoiseAudiometer</string>
+    <string name="app_name">噪音計</string>
+    <string name="to_csv">輸出CSV</string>
+    <string name="to_pdf">To PDF</string>
+    <string name="history">紀錄</string>
+    <string name="calibration">補正</string>
+    <string name="min_tag">最小</string>
+    <string name="max_tag">最大</string>
+    <string name="avg_tag">平均</string>
+    <string name="loading">讀取中..</string>
+    <string name="save_data">儲存資料</string>
+    <string name="name">名稱</string>
+    <string name="active_duration">偵測時長:</string>
+    <string name="save_time">儲存時間:</string>
+    <string name="max_sound_intensity">最大:</string>
+    <string name="min_sound_intensity">最小:</string>
+    <string name="average_sound_intensity">平均:</string>
+    <string name="dialog_name_setting">請為本次紀錄命名。</string>
+    <string name="record_data">已紀錄資料</string>
+    <string name="db">db</string>
+    <string name="noise">噪音</string>
+    <string name="lock_rotate">已鎖住螢幕旋轉</string>
+    <string name="check">確認</string>
+    <string name="about">關於</string>
+    <string name="save">儲存</string>
+    <string name="exporting">輸出中..</string>
+    <string name="detail_info">詳細資料</string>
+    <string name="check_content">是否確定要刪除資料?</string>
+    <string name="modify_name">名稱修改</string>
+    <string name="recording_info">紀錄資訊:</string>
+    <string name="record_stop_Info">記錄即將停止，是否要繼續操作?</string>
 </resources>

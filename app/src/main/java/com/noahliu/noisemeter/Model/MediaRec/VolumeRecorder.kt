@@ -57,7 +57,6 @@ class VolumeRecorder(private val activity: Activity, private val interval: Long)
         handler.removeCallbacks(task)
         isRecoding = false
         try {
-            recorder.release()
             recorder.stop()
         } catch (e: IllegalStateException) {
             e.printStackTrace()

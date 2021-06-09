@@ -61,7 +61,7 @@ class MainActivity : BaseActivity(), MeasureInterface,
         val TAG = MainActivity::class.java.simpleName + "My"
         var calibration = 0
         const val ROTATE_SAVE = "ROTATE_SAVE"
-        const val limitRotatableData = 1500
+        const val limitRotatableData = 600
     }
 
     private var tvCalRes: TextView? = null
@@ -78,12 +78,14 @@ class MainActivity : BaseActivity(), MeasureInterface,
         checkPermission()
         init()
         val chart = findViewById<LineChart>(R.id.lineChart_CurrentValue)
+
         realtimeChartSetting = if (savedInstanceState != null){
             val dataSave = savedInstanceState.getFloatArray(ROTATE_SAVE)
             RealtimeChart(this, chart,dataSave!!)
         }else{
             RealtimeChart(this, chart)
         }
+
         realtimeChartSetting.respond = this
         vibrator = application.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
 
@@ -113,6 +115,7 @@ class MainActivity : BaseActivity(), MeasureInterface,
             dataArray.add(chartItem.getEntryForIndex(i).y)
         }
         outState.putFloatArray(ROTATE_SAVE,dataArray.toFloatArray())
+        initVolumeRecord()
     }
 
     private fun checkPermission(): Boolean {
@@ -150,12 +153,14 @@ class MainActivity : BaseActivity(), MeasureInterface,
             if (!record!!.isRecoding) record!!.startRecord()
         }
     }
-
     override fun onStart() {
         super.onStart()
+        initVolumeRecord()
         if (record == null || record!!.isRecoding) return
         if (!record!!.isRecoding) record!!.startRecord()
+
     }
+
 
 
     override fun onStop() {
@@ -163,6 +168,7 @@ class MainActivity : BaseActivity(), MeasureInterface,
         if (record == null) return
         if (record!!.isRecoding) record!!.stopRecord()
     }
+
 
     @SuppressLint("SetTextI18n")
     override fun dbRespond(db: Int) {
@@ -236,8 +242,9 @@ class MainActivity : BaseActivity(), MeasureInterface,
             R.id.action_History -> {
                 val alertDialog = AlertDialog.Builder(this)
                 alertDialog.setTitle(getString(R.string.check))
-                alertDialog.setMessage("Recording will be stopped, continue?")
+                alertDialog.setMessage(getString(R.string.record_stop_Info))
                 alertDialog.setPositiveButton(android.R.string.ok){i,dialog->
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
                     realtimeChartSetting.clearData()
                     val intent = Intent(this@MainActivity, HistoryRecord::class.java)
                     startActivity(intent)

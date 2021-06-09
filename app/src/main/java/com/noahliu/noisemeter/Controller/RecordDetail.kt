@@ -3,15 +3,16 @@ package com.noahliu.noisemeter.Controller
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.noahliu.noisemeter.Model.Activity.BaseActivity
+import com.noahliu.noisemeter.Model.CSV.CSV
 import com.noahliu.noisemeter.Model.Chart.CustomMakerView
 import com.noahliu.noisemeter.Model.Chart.XLabel
 import com.noahliu.noisemeter.Model.Entity.HistoryEntity
@@ -28,7 +29,7 @@ class RecordDetail : BaseActivity() {
         val TAG = RecordDetail::class.java.simpleName+"My"
         val RECORD_ACTIVITY = "GoRecordActivity"
     }
-
+    lateinit var nowData:DataForm
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +41,7 @@ class RecordDetail : BaseActivity() {
         progressDialog.show()
         Thread{
             val data = RoomDateBase.getInstance(this@RecordDetail)!!.getUao().findDataById(dataID)
+            nowData = data
             val a = MyUtils.dataFilter(data.data.size / 10, data.data)
             runOnUiThread {
                 setBaseUI(data)
@@ -47,7 +49,6 @@ class RecordDetail : BaseActivity() {
             }
             progressDialog.dismiss()
         }.start()
-
 
     }
 
@@ -120,4 +121,20 @@ class RecordDetail : BaseActivity() {
         chart.data = chartData
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detail,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            R.id.action_csv->{
+                CSV(this).execute(nowData)
+            }
+        }
+
+
+        return super.onOptionsItemSelected(item)
+    }
 }

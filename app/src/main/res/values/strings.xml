@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NoiseAudiometer</string>
+    <string name="app_name">Sound\nMeter</string>
     <string name="to_csv">To CSV</string>
     <string name="to_pdf">To PDF</string>
     <string name="history">History</string>
@@ -23,4 +23,10 @@
     <string name="check">Check</string>
     <string name="about">About</string>
     <string name="save">Save</string>
+    <string name="exporting">Exporting..</string>
+    <string name="detail_info">Detail Info</string>
+    <string name="check_content">Are you sure to delete the data?</string>
+    <string name="modify_name">ModifyName</string>
+    <string name="recording_info">Recording info:</string>
+    <string name="record_stop_Info">Recording will be stopped, continue?</string>
 </resources>

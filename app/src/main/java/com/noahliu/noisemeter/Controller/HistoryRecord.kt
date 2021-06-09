@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.noahliu.noisemeter.Model.Activity.BaseActivity
 import com.noahliu.noisemeter.Model.Adapter.DisplayAdapter
@@ -38,7 +37,6 @@ class HistoryRecord : BaseActivity(), HistoryListRespond {
         progressDialog = loadingDialog(this)
         progressDialog.show()
         setRecyclerViewList()
-        
     }
 
 
@@ -67,8 +65,8 @@ class HistoryRecord : BaseActivity(), HistoryListRespond {
 
     override fun deleteRespond(itemData: DataForm, position: Int) {
         val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Check")
-        alertDialog.setMessage("Are you sure to delete the data?")
+        alertDialog.setTitle(R.string.check)
+        alertDialog.setMessage(getString(R.string.check_content))
         alertDialog.setPositiveButton(android.R.string.ok) { p0, p1 ->
             viewModel.deleteData(itemData)
         }
@@ -79,7 +77,7 @@ class HistoryRecord : BaseActivity(), HistoryListRespond {
     @SuppressLint("SetTextI18n")
     override fun modifyRespond(itemData: DataForm) {
         val view = layoutInflater.inflate(R.layout.dialog_save,null)
-        val dialog = setBaseDialog(view,this,"ModifyName")
+        val dialog = setBaseDialog(view,this,getString(R.string.modify_name))
         val duration = MyUtils.timeCalculate(itemData.data.size / 10)
         view.textView_ActivityDuration.text =
             getString(R.string.active_duration) + " " + duration

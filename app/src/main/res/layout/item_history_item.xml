@@ -66,7 +66,7 @@
                 android:background="@drawable/commend_round_with_ripple_white"
                 android:backgroundTint="@color/colorTheme"
                 android:fontFamily="sans-serif-black"
-                android:text="Detail Info"
+                android:text="@string/detail_info"
                 android:textSize="@dimen/sp_14"
                 android:padding="@dimen/dp_10"
                 android:textAllCaps="false"
