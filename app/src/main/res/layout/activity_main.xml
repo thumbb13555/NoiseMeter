@@ -52,13 +52,13 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-8691515013768572~4067620134"
+        app:adUnitId="ca-app-pub-8691515013768572/4014224137"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </com.google.android.gms.ads.AdView>
-<!--    app:adUnitId="ca-app-pub-8691515013768572~4067620134"正式用-->
+<!--    app:adUnitId="ca-app-pub-8691515013768572/4014224137"正式用-->
         <!--ads:adUnitId = "ca-app-pub-3940256099942544/6300978111"測試用-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
