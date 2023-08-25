@@ -37,7 +37,7 @@ class VolumeBar : View {
     }
 
     @SuppressLint("DrawAllocation", "CanvasSize")
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val colorArray = intArrayOf(Color.GREEN,Color.YELLOW,Color.RED)
 

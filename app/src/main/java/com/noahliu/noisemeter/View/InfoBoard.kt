@@ -80,18 +80,17 @@ class InfoBoard : View {
         setMeasuredDimension(width, height)
     }
 
-    
     @SuppressLint("DrawAllocation")
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (canvas == null)return
-        val tetwidth = mTextPaint!!.measureText(value).toInt()
+        val txtWidth = mTextPaint!!.measureText(value).toInt()
         mStaticLayout = StaticLayout(
             value, mTextPaint,
-            tetwidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0f, false
+            txtWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0f, false
         )
         mStaticLayout!!.draw(canvas)
     }
+
 
     private fun drawString(text: String, x: Int, y: Int, paint: TextPaint, canvas: Canvas){
         if (text.contains("\n")){
